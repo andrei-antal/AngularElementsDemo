@@ -1,3 +1,18 @@
+## Angular Elements demo for ngBucharest Meetup
+
+- Proof of concept for Building Angular Elements and using them in a react app. This is a fork of Rob Wormalds old Angular Elements repo. Mheanwile it has been moved to the Angular repo, on this [branch](https://github.com/angular/angular/tree/labs/elements).
+- This example is generated using the instructions found in [this](https://moduscreate.com/blog/angular-elements-ngcomponents-everywhere/) article
+
+- To run the example
+1. run `npm install`
+2. run `npm run build` - this will generate the Angular Element web component script.
+3. In the `lib` folder you can find 2 files: `angular.js` and `todo-app.js`. In order to use these, just create a simple html app and ad dthe 2 in a script tag and include `<todo-app></todo-app>` in you application and interact with it as with any HTML dom element
+4. To run the react example, go in the `react_app` folder and run `yarn install` and then `yarn run start` (make sure you have Yarn installed; npm works as well) and explore the code.
+
+
+
+This is the original readme:
+
 ### experiments with Angular and Web Components
 
 Sketching out hosting Angular Components as Custom Elements / Web Components
