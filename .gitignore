@@ -4,3 +4,5 @@
 /lib/
 /dist/
 /src/ngfactory/
+/react_app/node_modules
+/react_app/build
