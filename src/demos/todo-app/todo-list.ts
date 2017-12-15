@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core'
+import {Component, Input, Output, EventEmitter, OnChanges} from '@angular/core'
 
 @Component({
 	selector: 'todo-list',
@@ -12,7 +12,9 @@ import {Component, Input, Output, EventEmitter} from '@angular/core'
 	providers: [],
 	styles: [`:host { display: block }`]
 })
-export class TodoList {
+export class TodoList implements OnChanges{
 	@Input() todos: any[]
-	@Output() completeTodo = new EventEmitter();
+  @Output() completeTodo = new EventEmitter();
+  ngOnChanges() {
+  }
 }

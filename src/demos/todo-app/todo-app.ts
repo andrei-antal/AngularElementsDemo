@@ -1,22 +1,25 @@
-import {Component, HostListener, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, IterableDiffers} from '@angular/core'
+import {Component, HostBinding, Input, Output, EventEmitter, ViewEncapsulation, ChangeDetectorRef, IterableDiffers} from '@angular/core'
 import {BehaviorSubject} from 'rxjs/BehaviorSubject'
 
 export class TodoService {
-	todos:BehaviorSubject<any[]> = new BehaviorSubject([])
+  todos:BehaviorSubject<any[]> = new BehaviorSubject([])
+  todosNo = 0;
 	addTodo(newTodoText:string){
-		this.todos.next(this.todos.value.concat([{text: 'new todo text', completed: false}]))
+    this.todos.next(this.todos.value.concat([{text: newTodoText, completed: false}]))
+    this.todosNo += 1;
 	}
 	completeTodo(completedTodo:any){
-		this.todos.next(this.todos.value.filter(todo => todo !== completedTodo))
+    this.todos.next(this.todos.value.filter(todo => todo !== completedTodo))
+    this.todosNo -= 1;
 	}
 }
 
 @Component({
 	selector: 'todo-app',
 	template: `
-	  <h1>Todo App</h1>
+	  <h1>{{title}}</h1>
 	  <input type="text" #todoInput>
-	  <button (click)="addTodo(todoInput)"></button>
+	  <button (click)="addTodo(todoInput)">ADD</button>
 	  <todo-list [todos]="todoService.todos | push" (completeTodo)="completeTodo($event)"></todo-list>
 	`,
 	encapsulation: ViewEncapsulation.Native,
@@ -32,19 +35,17 @@ export class TodoService {
 	providers: [TodoService]
 })
 export class TodoApp {
-	constructor(public todoService:TodoService, private cdr:ChangeDetectorRef){
+  @Input() title = "To do app";
+  @Output() added = new EventEmitter();
+	constructor(public todoService:TodoService){}
 
-  }
-
-	//these are internal to the component.
 	addTodo(input:HTMLInputElement){
     this.todoService.addTodo(input.value);
     input.value = '';
-	  //this.cdr.detectChanges();
+    this.added.emit({length: this.todoService.todosNo});
 	}
 
 	completeTodo(todo:any){
 	  this.todoService.completeTodo(todo);
-	  //this.cdr.detectChanges();
 	}
 }
